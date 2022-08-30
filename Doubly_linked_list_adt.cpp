@@ -2,18 +2,21 @@
 using namespace std;
 class Node
 {
-protected:
+protected: // Doubly linked had 3 elements
+    Node *prev;
     int data;
     Node *next;
 
 public:
     Node()
     {
+        prev = NULL;
         next = NULL;
     }
 
     ~Node()
     {
+        delete prev;
         delete next;
     }
 };
@@ -53,7 +56,7 @@ Implementation::~Implementation()
 }
 void menu(Implementation &List)
 {
-    cout << "Welcome to Singly Linked list ADT" << endl;
+    cout << "Welcome to Doubly Linked list ADT" << endl;
     int x;
     cout << "Enter the choice 1 for creating list using user input" << endl;
     cout << "Enter the choice 2 for printing the elements" << endl;
@@ -72,7 +75,6 @@ void menu(Implementation &List)
     cout << "------------------------------------------------------------------" << endl;
     cout << "Enter your choice for opertion : " << endl;
     cin >> x;
-
     switch (x)
     {
     case 1:
@@ -138,6 +140,7 @@ int main()
         {
             exit(1);
         }
+
         return 0;
     }
 }
