@@ -3,16 +3,38 @@ using namespace std;
 class Node
 {
 protected:
-    Node *head;
     int data;
+    Node *next;
 public:
-};
-void menu()
-{
+    Node()
+    {
+        next=NULL;
+    }
 
+    ~Node()
+    {
+        delete next;
+    }
+};
+class Implementation
+{
+private:
+    Node *head;
+public:
+    Implementation(/* args */);
+    ~Implementation();
+};
+
+Implementation::Implementation(/* args */)
+{
 }
+
+Implementation::~Implementation()
+{
+}
+
 int main()
 {
-    
-return 0;
+
+    return 0;
 }
