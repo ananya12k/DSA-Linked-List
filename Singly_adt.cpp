@@ -137,19 +137,29 @@ void Implementation::delete_first()
 void Implementation::delete_last()
 {
     Node *node = head;
+    Node *temp = node;
     while (node->next != NULL)
     {
+        temp = node;
         node = node->next;
     }
-    Node *temp = node;
-    temp = NULL;
-    delete temp;
+    temp->next = NULL;
+    delete node;
 }
 void Implementation::delete_before_node()
 {
+    Node *node;
+    cout << "Enter the node number before which you want to insert a node: " << endl;
+    int num;
+    cin >> num;
+    
 }
 void Implementation::delete_after_node()
 {
+    Node *node;
+    cout << "Enter the node number after which you want to insert a node: " << endl;
+    int num;
+    cin >> num;
 }
 bool Implementation ::isEmpty() const
 {
@@ -277,20 +287,25 @@ void menu(Implementation &List)
 int main()
 {
     Implementation List;
-    menu(List);
     while (1)
     {
+        menu(List);
         std::cout << "Do you want to do any more operations?? " << endl;
         char ans;
         std::cin >> ans;
-        if (ans == 'y')
+        while (ans != 'y')
         {
-            menu(List);
+
+            if (ans == 'y')
+            {
+                menu(List);
+            }
+            else
+            {
+                exit(1);
+            }
         }
-        else
-        {
-            exit(1);
-        }
-        return 0;
     }
+
+    return 0;
 }

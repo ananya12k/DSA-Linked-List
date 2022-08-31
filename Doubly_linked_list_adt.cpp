@@ -266,21 +266,25 @@ void menu(Implementation &List)
 int main()
 {
     Implementation List;
-    menu(List);
     while (1)
     {
+        menu(List);
         std::cout << "Do you want to do any more operations?? " << endl;
         char ans;
         std::cin >> ans;
-        if (ans == 'y')
+        while (ans != 'y')
         {
-            menu(List);
-        }
-        else
-        {
-            exit(1);
-        }
 
-        return 0;
+            if (ans == 'y')
+            {
+                menu(List);
+            }
+            else
+            {
+                exit(1);
+            }
+        }
     }
+
+    return 0;
 }
