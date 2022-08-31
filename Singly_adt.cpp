@@ -36,7 +36,8 @@ public:
     void delete_last();
     void delete_before_node();
     void delete_after_node();
-    void get_length();
+    int get_length();
+    bool isEmpty() const;
     void get_nth_node();
     void print_middle();
     void reverse_list();
@@ -118,15 +119,31 @@ void Implementation::insert_at_last()
 }
 void Implementation::insert_before_node()
 {
+    cout << "Enter value to be inserted: " << endl;
+    int val;
+    cin >> val;
+    Node *newnode = head;
 }
 void Implementation::insert_after_node()
 {
 }
 void Implementation::delete_first()
 {
+    Node *node = head;
+    node = NULL;
+    head = head->next;
+    delete node;
 }
 void Implementation::delete_last()
 {
+    Node *node = head;
+    while (node->next != NULL)
+    {
+        node = node->next;
+    }
+    Node *temp = node;
+    temp = NULL;
+    delete temp;
 }
 void Implementation::delete_before_node()
 {
@@ -134,8 +151,22 @@ void Implementation::delete_before_node()
 void Implementation::delete_after_node()
 {
 }
-void Implementation::get_length()
+bool Implementation ::isEmpty() const
 {
+    return head == NULL;
+}
+int Implementation::get_length()
+{
+    int count = 0;
+    Node *current = head;
+
+    while (current != NULL)
+    {
+        count++;
+        current = current->next;
+    }
+
+    return count;
 }
 void Implementation::get_nth_node()
 {
@@ -165,6 +196,7 @@ void menu(Implementation &List)
     cout << "Enter the choice 11 to get Nth node of a linked list " << endl;
     cout << "Enter the choice 12 to print middle of a linked list " << endl;
     cout << "Enter the choice 13 to reverse the list " << endl;
+    cout << "Enter the choice 14 to check whether the list is empty or not " << endl;
     cout << "------------------------------------------------------------------" << endl;
     cout << "Enter your choice for opertion : " << endl;
     cin >> x;
@@ -184,35 +216,60 @@ void menu(Implementation &List)
         List.print_list();
         break;
     case 4:
+        List.insert_before_node();
+        List.print_list();
         break;
     case 5:
-        /* code */
+        List.insert_after_node();
+        List.print_list();
         break;
     case 6:
-        /* code */
+        List.delete_first();
+        List.print_list();
         break;
     case 7:
-        /* code */
+        List.delete_last();
+        List.print_list();
         break;
     case 8:
-        /* code */
+        List.delete_before_node();
+        List.print_list();
         break;
     case 9:
-        /* code */
-        break;
+        List.delete_after_node();
+        List.print_list();
     case 10:
-        /* code */
-        break;
+    {
+        cout << "No. of nodes:- " << endl;
+        int m = List.get_length();
+        cout << m << endl;
+    }
+    break;
 
     case 11:
-        /* code */
+        List.get_nth_node();
+        List.print_list();
         break;
     case 12:
-        /* code */
+        List.print_middle();
+        List.print_list();
         break;
     case 13:
-        /* code */
+        List.reverse_list();
+        List.print_list();
         break;
+    case 14:
+    {
+        cout << "Linked list empty--> True" << endl;
+        cout << "Linked list empty--> False" << endl;
+        bool listempty_or_not = List.isEmpty();
+        if (listempty_or_not)
+            cout << "True" << endl;
+        else
+            cout << "False" << endl;
+    }
+
+    break;
     default:
         break;
     }
