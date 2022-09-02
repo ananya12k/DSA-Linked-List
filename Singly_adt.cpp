@@ -119,13 +119,48 @@ void Implementation::insert_at_last()
 }
 void Implementation::insert_before_node()
 {
+    Node *newnode = new Node;
+    Node *ptr = head;
+    Node *temp;
+    cout << "Enter the value before which you want to insert a node: " << endl;
+    int x;
+    cin >> x;
     cout << "Enter value to be inserted: " << endl;
-    int val;
-    cin >> val;
-    Node *newnode = head;
+    int num;
+    cin >> num;
+    newnode->data = num;
+    while (ptr->data != x && ptr != NULL)
+    {
+        temp = ptr;
+        ptr = ptr->next;
+    }
+    if (ptr == NULL)
+    {
+        cout << "Node not found" << endl;
+    }
+    else
+    {
+        newnode->next = ptr;
+        temp->next = newnode;
+    }
 }
 void Implementation::insert_after_node()
 {
+    Node *newnode = new Node;
+    Node *ptr, *preptr;
+    cout << "Enter the value after which you want to insert a node: " << endl;
+    int x;
+    cin >> x;
+    cout << "Enter value to be inserted: " << endl;
+    int num;
+    cin >> num;
+    newnode->data = num;
+    while (ptr->data != x && ptr != NULL)
+    {
+        ptr = ptr->next;
+    }
+    newnode->next = ptr->next;
+    ptr->next = newnode;
 }
 void Implementation::delete_first()
 {
@@ -148,18 +183,85 @@ void Implementation::delete_last()
 }
 void Implementation::delete_before_node()
 {
-    Node *node;
-    cout << "Enter the node number before which you want to insert a node: " << endl;
-    int num;
-    cin >> num;
-    
+    Node *temp, *nodetodelete;
+    temp = head;
+    cout << "Enter the value before which you want to delete a node: " << endl;
+    int x;
+    cin >> x;
+    int count = 1;
+    while (temp->data != x)
+    {
+        temp = temp->next;
+        count++;
+    }
+    cout << "Found at " << count << "\nNode to be deleted is " << count + 1 << endl;
+    if (count == 1)
+    {
+        temp = head;
+        head = head->next;
+        delete temp;
+    }
+    else
+    {
+        for (int i = 1; i < count - 2; i++)
+        {
+            if (temp != NULL)
+            {
+                temp = temp->next;
+            }
+        }
+        if (temp != NULL && temp->next != NULL)
+        {
+            nodetodelete = temp->next;
+            temp->next = temp->next->next;
+            delete nodetodelete;
+        }
+        else
+        {
+            cout << "Node is already null" << endl;
+        }
+    }
 }
 void Implementation::delete_after_node()
 {
-    Node *node;
-    cout << "Enter the node number after which you want to insert a node: " << endl;
-    int num;
-    cin >> num;
+    Node *temp, *ptr;
+    temp = head;
+    cout << "Enter the value before which you want to delete a node: " << endl;
+    int x;
+    cin >> x;
+    int count = 1;
+    while (temp->data != x)
+    {
+        temp = temp->next;
+        count++;
+    }
+    cout << "Found at " << count << "\nNode to be deleted is " << count - 1 << endl;
+    if (count == 1)
+    {
+        temp = head;
+        head = head->next;
+        delete temp;
+    }
+    else
+    {
+        for (int i = 1; i <= (count - 2); i++)
+        {
+            if (temp != NULL)
+            {
+                temp = temp->next;
+            }
+        }
+        if (temp != NULL && temp->next != NULL)
+        {
+            ptr = temp->next;
+            temp->next = temp->next->next;
+            delete ptr;
+        }
+        else
+        {
+            cout << "Node is already null" << endl;
+        }
+    }
 }
 bool Implementation ::isEmpty() const
 {
