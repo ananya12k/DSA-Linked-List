@@ -183,85 +183,49 @@ void Implementation::delete_last()
 }
 void Implementation::delete_before_node()
 {
-    Node *temp, *nodetodelete;
-    temp = head;
+    Node *temp, *ptr;
+    ptr = temp = head;
     cout << "Enter the value before which you want to delete a node: " << endl;
     int x;
     cin >> x;
-    int count = 1;
-    while (temp->data != x)
+    if (temp->data == x)
     {
-        temp = temp->next;
-        count++;
+        cout << "Node cannot be deleted" << endl;
     }
-    cout << "Found at " << count << "\nNode to be deleted is " << count + 1 << endl;
-    if (count == 1)
+    else if (temp->next->data == x)
     {
-        temp = head;
-        head = head->next;
-        delete temp;
+        ptr = temp;
+        temp = temp->next;
+        ptr = NULL;
+        delete ptr;
+    }
+    else if (temp->next->next->data == x)
+    {
+        ptr = temp->next;
+        temp->next = temp->next->next;
+        ptr = NULL;
+        delete ptr;
     }
     else
     {
-        for (int i = 1; i < count - 2; i++)
+        while (temp->next->next->data != x)
         {
-            if (temp != NULL)
-            {
-                temp = temp->next;
-            }
+            ptr = temp;
+            temp = temp->next;
         }
-        if (temp != NULL && temp->next != NULL)
-        {
-            nodetodelete = temp->next;
-            temp->next = temp->next->next;
-            delete nodetodelete;
-        }
-        else
-        {
-            cout << "Node is already null" << endl;
-        }
+        ptr->next->next=temp->next;
+        temp->next=temp->next->next;
+        ptr->next->next=NULL;
+        delete (ptr->next->next);
     }
 }
 void Implementation::delete_after_node()
 {
     Node *temp, *ptr;
     temp = head;
-    cout << "Enter the value before which you want to delete a node: " << endl;
+    cout << "Enter the value after which you want to delete a node: " << endl;
     int x;
     cin >> x;
-    int count = 1;
-    while (temp->data != x)
-    {
-        temp = temp->next;
-        count++;
-    }
-    cout << "Found at " << count << "\nNode to be deleted is " << count - 1 << endl;
-    if (count == 1)
-    {
-        temp = head;
-        head = head->next;
-        delete temp;
-    }
-    else
-    {
-        for (int i = 1; i <= (count - 2); i++)
-        {
-            if (temp != NULL)
-            {
-                temp = temp->next;
-            }
-        }
-        if (temp != NULL && temp->next != NULL)
-        {
-            ptr = temp->next;
-            temp->next = temp->next->next;
-            delete ptr;
-        }
-        else
-        {
-            cout << "Node is already null" << endl;
-        }
-    }
 }
 bool Implementation ::isEmpty() const
 {

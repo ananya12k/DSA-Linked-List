@@ -104,24 +104,7 @@ void Implementation::insert_at_last()
     cout << "Enter value to be inserted: " << endl;
     int val;
     cin >> val;
-
-    newNode->data = val;
-    if (head == NULL)
-    {
-        head = newNode;
-        newNode->next = NULL;
-    }
-    else
-    {
-
-        Node *curNode = head;
-        while (curNode->next != NULL)
-        {
-            curNode = curNode->next;
-        }
-        curNode->next = newNode;
-        newNode->next = NULL;
-    }
+    
 }
 void Implementation::insert_before_node()
 {
