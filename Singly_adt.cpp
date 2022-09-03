@@ -213,10 +213,11 @@ void Implementation::delete_before_node()
             ptr = temp;
             temp = temp->next;
         }
-        ptr->next->next=temp->next;
-        temp->next=temp->next->next;
-        ptr->next->next=NULL;
-        delete (ptr->next->next);
+        ptr->next->next = temp->next;
+        temp->next = temp->next->next;
+        Node *k = ptr->next->next;
+        k = NULL;
+        delete k;
     }
 }
 void Implementation::delete_after_node()
