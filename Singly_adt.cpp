@@ -190,7 +190,7 @@ void Implementation::delete_before_node()
     cin >> x;
     if (temp->data == x)
     {
-        cout << "Node cannot be deleted" << endl;
+        cout << "Node before cannot be deleted" << endl;
     }
     else if (temp->next->data == x)
     {
@@ -224,6 +224,32 @@ void Implementation::delete_after_node()
     cout << "Enter the value after which you want to delete a node: " << endl;
     int x;
     cin >> x;
+    if (temp->data == x)
+    {
+        ptr = temp->next;
+        temp->next = temp->next->next;
+        ptr = NULL;
+        delete ptr;
+    }
+
+    else
+    {
+        while (temp->data != x && temp->next != NULL)
+        {
+            temp = temp->next;
+        }
+        if (temp->next->next != NULL)
+        {
+            ptr = temp->next;
+            temp->next = temp->next->next;
+            ptr = NULL;
+            delete ptr;
+        }
+        else
+        {
+            temp->next = NULL;
+        }
+    }
 }
 bool Implementation ::isEmpty() const
 {
