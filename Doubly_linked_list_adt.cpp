@@ -61,10 +61,19 @@ void Implementation::creation()
     cout << "Enter how many elements do you want in your list : " << endl;
     int ele;
     cin >> ele;
-
+    Node *newNode = new Node;
+    Node *temp = head;
     for (int i = 0; i < ele; i++)
     {
-        insert_at_last();
+        if (i == 0)
+        {
+            insert_at_first();
+        }
+
+        else
+        {
+            insert_at_last();
+        }
     }
 }
 void Implementation::print_list()
@@ -96,6 +105,7 @@ void Implementation::insert_at_first()
 void Implementation::insert_at_last()
 {
     Node *newNode = new Node;
+    Node *temp;
     if (!newNode)
     {
         cout << "Memory Error" << endl;
@@ -104,13 +114,75 @@ void Implementation::insert_at_last()
     cout << "Enter value to be inserted: " << endl;
     int val;
     cin >> val;
-    
+    newNode->data = val;
+    while (temp->next != NULL)
+    {
+        temp = temp->next;
+    }
+
+    newNode->next = NULL;
+    temp->next = newNode;
+    newNode->prev = temp;
 }
 void Implementation::insert_before_node()
 {
+    Node *newnode = new Node;
+    Node *temp = head;
+    cout << "Enter the value before which you want to insert a node: " << endl;
+    int x;
+    cin >> x;
+    cout << "Enter value to be inserted: " << endl;
+    int num;
+    cin >> num;
+    newnode->data = num;
+    if (temp->data == x)
+    {
+        newnode->prev = NULL;
+        newnode->next = head;
+        head = newnode;
+    }
+    else
+    {
+        while (temp->data != x)
+        {
+            temp = temp->next;
+        }
+        temp->prev->next = newnode;
+        newnode->next = temp;
+        newnode->prev = temp->prev;
+        temp->prev = newnode;
+    }
 }
 void Implementation::insert_after_node()
 {
+    Node *newnode = new Node;
+    Node *temp = head;
+    cout << "Enter the value after which you want to insert a node: " << endl;
+    int x;
+    cin >> x;
+    cout << "Enter value to be inserted: " << endl;
+    int num;
+    cin >> num;
+    newnode->data = num;
+
+    while (temp->data != x)
+    {
+        temp = temp->next;
+    }
+    if (temp->next == NULL)
+    {
+        newnode->next = NULL;
+        temp->next = newnode;
+        newnode->prev = temp;
+    }
+    else
+    {
+
+        newnode->next = temp->next;
+        temp->next->prev = newnode;
+        temp->next = newnode;
+        newnode->prev = temp;
+    }
 }
 void Implementation::delete_first()
 {
@@ -130,7 +202,7 @@ bool Implementation ::isEmpty() const
 }
 int Implementation::get_length()
 {
-    int count = 0;
+    int count = 1;
     Node *current = head;
 
     while (current != NULL)
