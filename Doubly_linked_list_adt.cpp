@@ -186,15 +186,100 @@ void Implementation::insert_after_node()
 }
 void Implementation::delete_first()
 {
+    Node *temp = head;
+    head = head->next;
+    head->prev = NULL;
+    temp = NULL;
+    delete temp;
 }
 void Implementation::delete_last()
 {
+    Node *temp = head;
+    Node *ptr;
+    while (temp->next != NULL)
+    {
+        temp = temp->next;
+    }
+    ptr = temp->prev->next;
+    temp->prev->next = NULL;
+    ptr = NULL;
+    delete ptr;
 }
 void Implementation::delete_before_node()
 {
+    Node *temp = head;
+    Node *ptr;
+    cout << "Enter the value before which you want to delete a node: " << endl;
+    int x;
+    cin >> x;
+    if (temp->data == x)
+    {
+        cout << "Node before cannot be deleted" << endl;
+    }
+    else if (temp->next->data == x)
+    {
+        delete_first();
+    }
+    else if (temp->next->next->data == x)
+    {
+        ptr = temp->next;
+        temp->next = temp->next->next;
+        temp->next->next->prev = temp;
+        ptr = NULL;
+        delete ptr;
+    }
+    else
+    {
+        while (temp->next->next->data != x)
+        {
+            temp = temp->next;
+        }
+        ptr = temp->next;
+        temp->next->next->prev = temp;
+        temp->next = temp->next->next;
+        ptr = NULL;
+        delete ptr;
+    }
 }
 void Implementation::delete_after_node()
 {
+    Node *temp = head;
+    Node *ptr;
+    cout << "Enter the value after which you want to delete a node: " << endl;
+    int x;
+    cin >> x;
+
+    if (temp->data == x)
+    {
+        ptr = temp->next;
+        temp->next->next->prev = temp;
+        temp->next = temp->next->next;
+        ptr = NULL;
+        delete ptr;
+    }
+
+    else
+    {
+        while (temp->data != x && temp->next != NULL)
+        {
+            temp = temp->next;
+        }
+        if (temp->next->next != NULL)
+        {
+            ptr = temp->next;
+            temp->next->next->prev = temp;
+            temp->next = temp->next->next;
+            ptr = NULL;
+            delete ptr;
+        }
+        else
+        {
+            ptr = temp->next;
+            temp->next = NULL;
+            ptr = NULL;
+            delete ptr;
+        }
+    }
 }
 bool Implementation ::isEmpty() const
 {
@@ -202,13 +287,13 @@ bool Implementation ::isEmpty() const
 }
 int Implementation::get_length()
 {
-    int count = 1;
+    int count = 0;
     Node *current = head;
 
     while (current != NULL)
     {
-        count++;
         current = current->next;
+        count++;
     }
 
     return count;
