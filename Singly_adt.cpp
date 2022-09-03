@@ -194,10 +194,7 @@ void Implementation::delete_before_node()
     }
     else if (temp->next->data == x)
     {
-        ptr = temp;
-        temp = temp->next;
-        ptr = NULL;
-        delete ptr;
+        delete_first();
     }
     else if (temp->next->next->data == x)
     {
