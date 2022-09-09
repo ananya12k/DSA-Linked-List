@@ -1,110 +1,125 @@
 #include <iostream>
-using namespace std;
-struct Node
-{
-   int coeff;
-   int power;
-   struct Node *next;
-};
-void create_node(int x, int y, struct Node **temp)
-{
-   struct Node *a, *r;
-   a = *temp;
-   if(a == NULL)
-   {
-      r =(struct Node*)malloc(sizeof(struct Node));
-      r->coeff = x;
-      r->power = y;
-      *temp = r;
-      r->next = (struct Node*)malloc(sizeof(struct Node));
-      r = r->next;
-      r->next = NULL;
-   }
-   else
-   {
-      r->coeff = x;
-      r->power = y;
-      r->next = (struct Node*)malloc(sizeof(struct Node));
-      r = r->next;
-      r->next = NULL;
-   }
-}
-//adding two polynomials
 
-void add(struct Node *p1, struct Node *p2, struct Node *result)
+using namespace std;
+class node
 {
-   while(p1->next && p2->next)
+   friend class poly;
+
+   int coeff;
+   int exp;
+   node *link;
+
+public:
+   node(int c, int e)
    {
-      if(p1->power > p2->power)
+      coeff = c;
+      exp = e;
+      link = NULL;
+   }
+};
+
+class poly
+{
+   node *first;
+
+public:
+   poly()
+   {
+      first = NULL;
+   }
+   void insert_end(int c, int e)
+   {
+      if (first == NULL)
       {
-         result->power = p1->power;
-         result->coeff = p1->coeff;
-         p1 = p1->next;
-      }
-      else if(p1->power < p2->power)
-      {
-         result->power = p2->power;
-         result->coeff = p2->coeff;
-         p2 = p2->next;
+         first = new node(c, e);
       }
       else
       {
-         result->power = p1->power;
-         result->coeff = p1->coeff+p2->coeff;
-         p1 = p1->next;
-         p2 = p2->next;
+         node *nn = new node(c, e);
+         node *temp = first;
+         while (temp->link != NULL)
+         {
+            temp = temp->link;
+         }
+         temp->link = nn;
       }
-      result->next = (struct Node *)malloc(sizeof(struct Node));
-      result = result->next;
-      result->next = NULL;
    }
-   while(p1->next || p2->next)
+   void add(node *head1, node *head2)
    {
-      if(p1->next)
+      node *f = head1;
+      node *s = head2;
+      while (f != NULL && s != NULL)
       {
-         result->power = p1->power;
-         result->coeff = p1->coeff;
-         p1 = p1->next;
+         if (f->exp == s->exp)
+         {
+            insert_end((f->coeff + s->coeff), f->exp);
+            f = f->link;
+            s = s->link;
+         }
+         else if (f->exp < s->exp)
+         {
+            this->insert_end(s->coeff, s->exp);
+            s = s->link;
+         }
+         else if (f->exp > s->exp)
+         {
+            this->insert_end(f->coeff, f->exp);
+            f = f->link;
+         }
       }
-      if(p2->next)
+      while (f != NULL)
       {
-         result->power = p2->power;
-         result->coeff = p2->coeff;
-         p2 = p2->next;
+         this->insert_end(f->coeff, f->exp);
+         f = f->link;
       }
-      result->next = (struct Node *)malloc(sizeof(struct Node));
-      result = result->next;
-      result->next = NULL;
+      while (s != NULL)
+      {
+         this->insert_end(s->coeff, s->exp);
+         s = s->link;
+      }
    }
-}
-//display function to print resultant polynomial
-void display(struct Node *node)
-{
-   while(node->next != NULL)
+
+   node *getfirst()
    {
-      printf("%dx^%d", node->coeff, node->power);
-      node = node->next;
-      if(node->next != NULL)
-         printf(" + ");
+      return first;
    }
-}
+   void display()
+   {
+      node *temp = first;
+      while (temp->link != NULL)
+      {
+         cout << temp->coeff << "x^" << temp->exp << " + " << endl;
+         temp = temp->link;
+      }
+      cout << temp->coeff << "x^" << temp->exp << endl;
+   }
+};
+
 int main()
 {
-   struct Node *p1 = NULL, *p2 = NULL, *result = NULL;
-   //creating polynomial 1 p1 and polynomial 2 p2
-   create_node(4,5,&p1);
-   create_node(2,3,&p1);
-   create_node(5,0,&p1);
-   create_node(2,3,&p2);
-   create_node(5,2,&p2);
-   create_node(5,1,&p2);
-   printf("polynomial 1: ");
-   display(p1);
-   printf("\n polynomial 2: ");
-   display(p2);
-   result = (struct Node *)malloc(sizeof(struct Node));
-   add(p1, p2, result);
-   printf("\n resultant polynomial: ");
-   display(result);
+   int m;
+   cout << "Enter no. of terms:";
+   cin >> m;
+   poly p1, p2;
+   int c, e;
+   cout << "Enter co and exp:";
+   for (int i = 0; i < m; i++)
+   {
+      cin >> c >> e;
+      p1.insert_end(c, e);
+   }
+
+   cout << "Enter no. of terms:";
+   cin >> m;
+
+   cout << "Enter co and exp:";
+   for (int i = 0; i < m; i++)
+   {
+      cin >> c >> e;
+      p2.insert_end(c, e);
+   }
+   poly p3;
+   p3.add(p1.getfirst(), p2.getfirst());
+   p3.display();
    return 0;
 }
