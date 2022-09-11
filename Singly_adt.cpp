@@ -5,7 +5,6 @@ class Node
 protected:
     int data;
     Node *next;
-
 public:
     friend class Implementation;
     Node()
