@@ -2,7 +2,7 @@
 using namespace std;
 class Node
 {
-protected: // Doubly linked had 3 elements
+protected: // Doubly linked list node has 3 elements
     Node *prev;
     int data;
     Node *next;
