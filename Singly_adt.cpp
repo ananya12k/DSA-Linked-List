@@ -360,7 +360,7 @@ void menu(Implementation &List)
     case 14:
     {
         cout << "Linked list empty--> True" << endl;
-        cout << "Linked list empty--> False" << endl;
+        cout << "Linked list  not empty--> False" << endl;
         bool listempty_or_not = List.isEmpty();
         if (listempty_or_not)
             cout << "True" << endl;
